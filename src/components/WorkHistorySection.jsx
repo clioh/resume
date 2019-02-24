@@ -13,7 +13,7 @@ const workHistory = [
     startDate: "03/2017",
     endDate: "05/2018",
     tasks: [
-      "Worked on RFM model better tailor Found Money product features",
+      "Worked on RFM model to better tailor Found Money product features",
       "Modeled user financial behavior to predict spend patterns",
       "Built algorithms to parse raw user transactions into merchants",
       "Automated categorization of transactions into an in-house taxonomy"
