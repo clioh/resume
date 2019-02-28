@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Grid, Row, Col } from "react-styled-flexboxgrid";
 import GithubCorner from "react-github-corner";
 import ReactGA from "react-ga";
+import { Typography } from "@material-ui/core";
 import axios from "axios";
 
 import AceEditor from "react-ace";
@@ -124,10 +125,26 @@ class App extends Component {
     if (!resume) {
       return (
         <div className="App">
+          <GithubCorner
+            href="https://github.com/harpe116/resume"
+            bannerColor="rgb(30, 144, 255)"
+          />
           <Grid>
             <Row center="xs">
-              <h1>Create a beautiful resume in seconds</h1>
+              <Typography variant="h1">Hi there! 👋</Typography>
             </Row>
+            <Row center="xs">
+              <Typography variant="h3">I'm Clio</Typography>
+            </Row>
+            <Row center="xs" style={{ margin: "2rem" }}>
+              <Typography variant="h6">
+                I decided to host my resume on the web and it's turned into a
+                tool to help you create yours just as easily. You can click "See
+                my resume example" to take a look at my resume, or create your
+                own following the template I've started you out with below.
+              </Typography>
+            </Row>
+
             {this.state.error ? this.state.error : null}
             <form onSubmit={this.handleSubmit}>
               <Row center="xs">
