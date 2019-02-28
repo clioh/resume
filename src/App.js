@@ -46,45 +46,34 @@ class App extends Component {
         />
         <Grid>
           <Row middle="xs">
-            <Col xs={12} md={6}>
+            <Col xs={12} sm={6}>
               <NameContainer>
                 <NameBorder>
-                  <Name>Clio</Name>
-                  <Name style={{ color: "rgb(30, 144, 255)" }}>Harper</Name>
+                  <Name>{firstName}</Name>
+                  <Name style={{ color: "rgb(30, 144, 255)" }}>{lastName}</Name>
                 </NameBorder>
               </NameContainer>
             </Col>
-            <GeneralSection
-              address="1209 1/2 W 27th St, Los Angeles, CA"
-              phoneNumber="512-788-4342"
-              email="clioharp@usc.edu"
-              github="https://github.com/harpe116"
-            />
+            <Col xs={12} sm={6}>
+              <GeneralSection generalInfo={rest} />
+            </Col>
           </Row>
           <Row>
             <Col xs={12} md={6}>
               <Row>
-                <EducationSection />
-                <WorkHistorySection />
-                <LanguagesSection
-                  languages={[
-                    { language: "English", level: "Native" },
-                    { language: "Spanish", level: "Full" },
-                    { language: "French", level: "Limited" }
-                  ]}
-                />
+                <EducationSection education={education} />
+                <WorkHistorySection workHistory={workHistory} />
+                <LanguagesSection languages={languages} />
               </Row>
             </Col>
 
             <Col xs={12} md={5} mdOffset={1}>
               <Row>
-                <TechnicalSection />
-                <HobbiesSection
-                  hobbies={[
-                    { name: "Certified Flight Instructor", icon: Airplane },
-                    { name: "3D Printing", icon: Printer }
-                  ]}
+                <TechnicalSection
+                  puppeteer={puppeteer}
+                  technicalSkills={technicalSkills}
                 />
+                <HobbiesSection hobbies={hobbies} />
               </Row>
             </Col>
           </Row>
