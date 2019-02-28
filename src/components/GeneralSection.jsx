@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Col } from "react-styled-flexboxgrid";
 
 const GeneralContainer = styled.div`
   p {
@@ -10,8 +9,9 @@ const GeneralContainer = styled.div`
   }
 `;
 
-const GeneralSection = ({ address, phoneNumber, email, github }) => (
-  <Col xs={12} md={6}>
+const GeneralSection = ({ generalInfo }) => {
+  const { phoneNumber, email, github, address } = generalInfo;
+  return (
     <GeneralContainer>
       <p>{address}</p>
 
@@ -33,7 +33,7 @@ const GeneralSection = ({ address, phoneNumber, email, github }) => (
         </a>
       </p>
     </GeneralContainer>
-  </Col>
-);
+  );
+};
 
 export default GeneralSection;
