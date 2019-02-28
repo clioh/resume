@@ -1,0 +1,32 @@
+{
+  "workHistory": [
+    {
+      "position": "Example position",
+      "company": "Example company",
+      "location": "Example Location",
+      "startDate": "01/2001",
+      "endDate": "10/2010",
+      "tasks": ["Example task/responsibility"]
+    }
+  ],
+  "education": {
+    "fieldOfStudy": "Field of study",
+    "dateEnded": "Graduation Date",
+    "universityName": "Your university",
+    "universityLocation": "Location"
+  },
+  "general": {
+    "github": "https://github.com/harpe116",
+    "firstName": "First",
+    "lastName": "Last",
+    "address": "Address",
+    "phoneNumber": "123-456-7890",
+    "email": "youremail@example.com"
+  },
+  "languages": [{ "language": "English", "level": "Native" }],
+  "hobbies": [
+    { "name": "Hobby 1", "icon": "airplane" },
+    { "name": "Hobby 2", "icon": "printer" }
+  ],
+  "technicalSkills": [{ "name": "Example skill", "level": 0.7 }]
+}

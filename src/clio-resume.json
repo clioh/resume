@@ -1,0 +1,99 @@
+{
+  "workHistory": [
+    {
+      "position": "Marine Officer Candidate",
+      "company": "United States Marine Corps",
+      "location": "Quantico, USA",
+      "startDate": "05/2018",
+      "endDate": "08/2018",
+      "tasks": [
+        "Completed a 10-week course that involved military academics, physical activity, and leadership",
+        "Led the platoon in multiple billets including candidate platoon commander",
+        "Graduated in the top 10% of the class in academics"
+      ]
+    },
+    {
+      "position": "Data Science Intern",
+      "company": "Acorns",
+      "location": "Irvine, USA",
+      "startDate": "03/2017",
+      "endDate": "05/2018",
+      "tasks": [
+        "Worked on RFM model to better tailor Found Money product features",
+        "Modeled user financial behavior to predict spend patterns",
+        "Built algorithms to parse raw user transactions into merchants",
+        "Automated categorization of transactions into an in-house taxonomy"
+      ]
+    },
+    {
+      "position": "Full Stack Developer",
+      "company": "Neura",
+      "location": "Tel Aviv, Israel",
+      "startDate": "05/2016",
+      "endDate": "03/2017",
+      "tasks": [
+        "Developed and published a React Native port of an iOS sample app",
+        "Automated data quality verification with Python",
+        "Created and maintained developer documentation",
+        "Wrote internal dashboards in both React and Angular",
+        "Ported an application from Objective-C to Swift",
+        "Migrated and maintained databases"
+      ]
+    },
+    {
+      "position": "Certified Flight Instructor",
+      "company": "Aces High Aviation",
+      "location": "Long Beach, USA",
+      "startDate": "03/2014",
+      "endDate": "05/2016",
+      "tasks": [
+        "Created and delivered lesson plans to students on the ground",
+        "Taught students practical skills necessary to procure their private pilot's license",
+        "Conducted air tours of Los Angeles and the surrounding areas"
+      ]
+    },
+    {
+      "position": "Product Development Intern",
+      "company": "Whipclip",
+      "location": "Santa Monica, USA",
+      "startDate": "05/2015",
+      "endDate": "09/2015",
+      "tasks": [
+        "Responsible for design sprints, development of new user-generated content platform",
+        "Managed projects for the creation ofnew web assets including a daily video variety page",
+        "Created management system for job applications"
+      ]
+    }
+  ],
+  "education": {
+    "fieldOfStudy": "Bachelor of Science in Applied and Computational Mathematics",
+    "dateStarted": "08/2014",
+    "dateEnded": "Graduating 12/2019",
+    "universityName": "University of Southern California",
+    "universityLocation": "Los Angeles, USA"
+  },
+  "general": {
+    "github": "https://github.com/harpe116",
+    "firstName": "Clio",
+    "lastName": "Harper",
+    "address": "1209 1/2 W 27th St, Los Angeles, CA",
+    "phoneNumber": "512-788-4342",
+    "email": "clioharp@usc.edu"
+  },
+  "languages": [
+    { "language": "English", "level": "Native" },
+    { "language": "Spanish", "level": "Full" },
+    { "language": "French", "level": "Limited" }
+  ],
+  "hobbies": [
+    { "name": "Certified Flight Instructor", "icon": "airplane" },
+    { "name": "3D Printing", "icon": "printer" }
+  ],
+  "technicalSkills": [
+    { "name": "Python", "level": 0.9 },
+    { "name": "Javascipt", "level": 0.9 },
+    { "name": "Web Design", "level": 0.8 },
+    { "name": "Spark/Scala", "level": 0.7 },
+    { "name": "MATLAB", "level": 0.5 }
+  ]
+}
