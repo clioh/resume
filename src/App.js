@@ -40,10 +40,20 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <GithubCorner
-          href="https://github.com/harpe116/resume"
-          bannerColor="rgb(30, 144, 255)"
-        />
+        {!puppeteer && (
+          <Fragment>
+            <GithubCorner
+              href="https://github.com/harpe116/resume"
+              bannerColor="rgb(30, 144, 255)"
+            />
+            <Button onClick={this.generatePDF}>
+              Generate and download PDF version
+            </Button>
+            <Button onClick={() => this.setState({ resume: null })}>
+              Back to the editor
+            </Button>
+          </Fragment>
+        )}
         <Grid>
           <Row middle="xs">
             <Col xs={12} sm={6}>
@@ -78,7 +88,7 @@ class App extends Component {
             </Col>
           </Row>
         </Grid>
-        <Footer />
+        {!puppeteer && <Footer />}
       </div>
     );
   }
