@@ -5,7 +5,7 @@ import { Row, Col } from "react-styled-flexboxgrid";
 const SkillIndicator = styled.div`
   background: #eee;
   width: 100%;
-  height: 100%;
+  height: 11px;
 `;
 
 const animation = keyframes`
@@ -26,6 +26,9 @@ const SkillLevel = styled.div`
   width: calc(${props => `${props.level * 100}%`} - 20px);
 
   animation: ${animation} 1.5s ease-in-out;
+  @media screen {
+    animation: none;
+  }
 `;
 
 const SkillIndicatorContainer = styled(Row)`
@@ -40,7 +43,7 @@ const SkillContainer = styled(Row)`
   }
 `;
 
-const Skill = ({ skillName, skillLevel }) => {
+const Skill = ({ skillName, skillLevel, puppeteer }) => {
   return (
     <SkillContainer>
       <Col xs={6}>
