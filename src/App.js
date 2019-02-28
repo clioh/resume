@@ -1,7 +1,14 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import styled from "styled-components";
 import { Grid, Row, Col } from "react-styled-flexboxgrid";
 import GithubCorner from "react-github-corner";
+import ReactGA from "react-ga";
+import axios from "axios";
+
+import AceEditor from "react-ace";
+
+import "brace/mode/json";
+import "brace/theme/monokai";
 
 import EducationSection from "./components/EducationSection";
 import GeneralSection from "./components/GeneralSection";
@@ -10,10 +17,9 @@ import TechnicalSection from "./components/TechnicalSection";
 import HobbiesSection from "./components/HobbiesSection";
 import LanguagesSection from "./components/LanguagesSection";
 import Footer from "./components/Footer";
+import ResumeTemplate from "./resume-template";
+import ClioResumeJson from "./clio-resume.json";
 import "./App.css";
-
-import Printer from "./icons/3d-printer.svg";
-import Airplane from "./icons/airplane.svg";
 
 const NameBorder = styled.div`
   border: 3px solid #1e90ff;
@@ -36,8 +42,131 @@ const Name = styled.h1`
   margin: 0;
 `;
 
+const Button = styled.button`
+  background: #1e90ff;
+  color: #fff;
+  font-size: 1em;
+  margin: 1em;
+  padding: 0.25em 1em;
+  border: 2px solid #fff;
+  border-radius: 3px;
+`;
+
+function initializeReactGA() {
+  ReactGA.initialize("UA-135192995-1");
+  ReactGA.pageview("/");
+}
+
 class App extends Component {
+  constructor(props) {
+    super(props);
+    initializeReactGA();
+
+    this.state = { resumeJson: JSON.stringify(ResumeTemplate, null, 2) };
+    window.loadJson = async resume => {
+      this.setState({ resume, loading: false, puppeteer: true });
+      this.forceUpdate();
+    };
+
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.generatePDF = this.generatePDF.bind(this);
+    this.generateClioResume = this.generateClioResume.bind(this);
+  }
+
+  handleSubmit(evt) {
+    evt.preventDefault();
+    let json;
+    try {
+      json = JSON.parse(this.state.resumeJson);
+    } catch (e) {
+      this.setState({ error: e.message });
+      return;
+    }
+    this.setState({ resume: json });
+  }
+
+  generateClioResume() {
+    this.setState({ resume: ClioResumeJson });
+  }
+
+  async generatePDF() {
+    const { resume } = this.state;
+    this.setState({ generatingPDF: true });
+    const response = await axios({
+      method: "post",
+      url: "https://resumeserver.herokuapp.com/",
+      data: {
+        resume
+      },
+      responseType: "arraybuffer",
+      headers: {
+        Accept: "application/pdf"
+      }
+    });
+    const blob = new Blob([response.data], { type: "application/pdf" });
+    const link = document.createElement("a");
+    link.href = window.URL.createObjectURL(blob);
+    link.download = `resume.pdf`;
+    link.click();
+    this.setState({ generatingPDF: false });
+  }
+
   render() {
+    const { resume, puppeteer, generatingPDF } = this.state;
+
+    if (generatingPDF) {
+      return (
+        <Grid>
+          <Row center="xs">Generating your PDF...</Row>
+        </Grid>
+      );
+    }
+    if (!resume) {
+      return (
+        <div className="App">
+          <Grid>
+            <Row center="xs">
+              <h1>Create a beautiful resume in seconds</h1>
+            </Row>
+            {this.state.error ? this.state.error : null}
+            <form onSubmit={this.handleSubmit}>
+              <Row center="xs">
+                <AceEditor
+                  onChange={newValue => this.setState({ resumeJson: newValue })}
+                  value={this.state.resumeJson}
+                  mode="json"
+                  theme="monokai"
+                  type="text"
+                  name="resumeJson"
+                  editorProps={{ $blockScrolling: true }}
+                />
+              </Row>
+              <Row center="xs">
+                <Button type="submit" value="Submit">
+                  Generate resume
+                </Button>
+              </Row>
+            </form>
+            <Row center="xs">
+              <Button onClick={this.generateClioResume}>
+                See my example resume
+              </Button>
+            </Row>
+          </Grid>
+        </div>
+      );
+    }
+
+    const {
+      general,
+      workHistory,
+      education,
+      languages,
+      hobbies,
+      technicalSkills
+    } = resume;
+    const { firstName, lastName, ...rest } = general;
+
     return (
       <div className="App">
         {!puppeteer && (
