@@ -42,7 +42,7 @@ const LanguagesSection = ({ languages }) => {
 
         {languages.map(language => {
           return (
-            <Row>
+            <Row key={language.language}>
               <LanguageColumn xs={6} style={{ padding: 0 }}>
                 <Language>{language.language}</Language>
               </LanguageColumn>
