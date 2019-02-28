@@ -24,7 +24,8 @@ const HobbiesSection = ({ hobbies }) => {
       <HobbyList around="xs">
         {hobbies.map(hobby => {
           const { name, icon } = hobby;
-          return <Hobby name={name} icon={icon} />;
+
+          return <Hobby key={name} name={name} icon={icon} />;
         })}
       </HobbyList>
     </HobbiesContainer>
