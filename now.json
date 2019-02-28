@@ -28,5 +28,6 @@
       "headers": { "cache-control": "s-maxage=0" },
       "dest": "/index.html"
     }
-  ]
+  ],
+  "alias": "create-resume.splat.studio"
 }
