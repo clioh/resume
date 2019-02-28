@@ -131,7 +131,7 @@ class App extends Component {
           />
           <Grid>
             <Row center="xs">
-              <Typography variant="h1">Hi there! 👋</Typography>
+              <Typography variant="h1">Hi there!</Typography>
             </Row>
             <Row center="xs">
               <Typography variant="h3">I'm Clio</Typography>
