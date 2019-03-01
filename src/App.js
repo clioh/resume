@@ -130,8 +130,10 @@ class App extends Component {
             bannerColor="rgb(30, 144, 255)"
           />
           <Grid>
-            <Row center="xs">
-              <Typography variant="h1">Hi there!</Typography>
+            <Row style={{ margin: "2rem" }} center="xs">
+              <Typography align="center" variant="h1">
+                Hi there!
+              </Typography>
             </Row>
             <Row center="xs">
               <Typography variant="h3">I'm Clio</Typography>
