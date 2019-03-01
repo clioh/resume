@@ -62,7 +62,7 @@ const WorkHistorySection = ({ workHistory }) => {
             <Col xs={12}>
               <ul>
                 {job.tasks.map(task => {
-                  return <li>{task}</li>;
+                  return <li key={task}>{task}</li>;
                 })}
               </ul>
             </Col>
