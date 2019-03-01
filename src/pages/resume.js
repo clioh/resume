@@ -4,6 +4,7 @@ import { Grid, Row, Col } from "react-styled-flexboxgrid";
 import styled from "styled-components";
 import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
+import { saveAs } from "file-saver";
 
 import ResumeContext from "../ResumeContext";
 
@@ -72,10 +73,7 @@ class Resume extends Component {
       }
     });
     const blob = new Blob([response.data], { type: "application/pdf" });
-    const link = document.createElement("a");
-    link.href = window.URL.createObjectURL(blob);
-    link.download = `resume.pdf`;
-    link.click();
+    saveAs(blob, "resume.pdf");
     this.setState({ generatingPDF: false });
   }
 
