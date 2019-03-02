@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { Col, Row } from "react-styled-flexboxgrid";
 
-import { SectionTitle, SectionIcon } from "./Generics";
-import LanguageIcon from "../icons/language.svg";
+import { SectionTitle } from "./Generics";
+import { ReactComponent as LanguageIcon } from "../icons/language.svg";
 
 const LanguagesContainer = styled(Col)`
   margin-top: 2rem;
@@ -28,11 +28,17 @@ const LanguageColumn = styled(Col)`
   margin: 0.25rem 0 0.25rem 0;
 `;
 
-const LanguagesSection = ({ languages }) => {
+const LanguagesSection = ({ languages, themeColor }) => {
   return (
     <LanguagesContainer xs={12}>
       <Row middle="xs">
-        <SectionIcon src={LanguageIcon} />
+        <LanguageIcon
+          fill={themeColor}
+          width="2rem"
+          height="2rem"
+          alt="Lanuage proficiency"
+        />
+
         <SectionTitle>Languages</SectionTitle>
       </Row>
       <Col xs={12}>

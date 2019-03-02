@@ -4,16 +4,16 @@ import { Row } from "react-styled-flexboxgrid";
 
 const FooterWrapper = styled(Row)`
   height: 100px;
-  background: rgb(30, 144, 255);
+  background: ${props => props.themeColor};
   margin: 0;
   margin-top: 2rem;
   left: 0;
   width: 100vw;
 `;
 
-const Footer = () => {
+const Footer = ({ themeColor }) => {
   return (
-    <FooterWrapper center="xs" middle="xs">
+    <FooterWrapper center="xs" middle="xs" themeColor={themeColor}>
       Built with
       <span role="img" aria-label="love">
         {"❤️"}

@@ -33,8 +33,9 @@ class Index extends Component {
       )
     };
 
-    window.loadJson = async resume => {
-      this.props.updateResumeJson(resume, true);
+    window.loadJson = async (resume, themeColor) => {
+      this.setState({ resume: resume });
+      this.props.updateResumeJson(resume, true, themeColor);
       this.props.history.push("/resume");
       this.forceUpdate();
     };

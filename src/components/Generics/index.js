@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const SectionTitle = styled.h6`
-  color: rgb(30, 144, 255);
+  color: ${props => props.themeColor};
 
   font-family: "Roboto", sans-serif;
   font-size: 1.5rem;
@@ -13,7 +13,8 @@ const SectionTitle = styled.h6`
 const SectionIcon = styled.img`
   height: 2rem;
   width: auto;
-  color: rgb(30, 144, 255);
+  color: ${props => props.themeColor};
+  fill: ${props => props.themeColor};
 `;
 
 export { SectionTitle, SectionIcon };

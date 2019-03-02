@@ -2,8 +2,8 @@ import React, { Fragment } from "react";
 import styled from "styled-components";
 import { Col, Row } from "react-styled-flexboxgrid";
 
-import { SectionTitle, SectionIcon } from "./Generics";
-import WorkIcon from "../icons/briefcase.svg";
+import { SectionTitle } from "./Generics";
+import { ReactComponent as WorkIcon } from "../icons/briefcase.svg";
 
 const Position = styled.p`
   font-weight: 700;
@@ -24,15 +24,20 @@ const WorkSectionContainer = styled(Col)`
 const CompanyAndLocation = styled.p`
   margin: 0;
   margin-bottom: 0.5rem;
-  color: rgb(30, 144, 255);
+  color: ${props => props.themeColor};
 `;
 
-const WorkHistorySection = ({ workHistory }) => {
+const WorkHistorySection = ({ workHistory, themeColor }) => {
   return (
     <WorkSectionContainer xs={12}>
       <Row>
-        <SectionIcon src={WorkIcon} alt="College graduation" />
-        <SectionTitle>Work</SectionTitle>
+        <WorkIcon
+          fill={themeColor}
+          width="2rem"
+          height="2rem"
+          alt="Place of work"
+        />
+        <SectionTitle themeColor={themeColor}>Work</SectionTitle>
       </Row>
       {workHistory.map(job => (
         <Fragment key={job.company}>
@@ -50,7 +55,7 @@ const WorkHistorySection = ({ workHistory }) => {
           </Row>
           <Row>
             <Col xs={12}>
-              <CompanyAndLocation>{`${job.company}, ${
+              <CompanyAndLocation themeColor={themeColor}>{`${job.company}, ${
                 job.location
               }`}</CompanyAndLocation>
             </Col>

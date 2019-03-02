@@ -17,7 +17,7 @@ const animation = keyframes`
 `;
 
 const SkillLevel = styled.div`
-  background: rgb(30, 144, 255);
+  background: ${props => props.themeColor};
   position: absolute;
   left: 5px;
   top: 5px;
@@ -43,7 +43,7 @@ const SkillContainer = styled(Row)`
   }
 `;
 
-const Skill = ({ skillName, skillLevel, puppeteer }) => {
+const Skill = ({ skillName, skillLevel, puppeteer, themeColor }) => {
   return (
     <SkillContainer>
       <Col xs={6}>
@@ -52,7 +52,7 @@ const Skill = ({ skillName, skillLevel, puppeteer }) => {
       <Col xs={6}>
         <SkillIndicatorContainer middle="xs">
           <SkillIndicator />
-          <SkillLevel level={skillLevel} />
+          <SkillLevel level={skillLevel} themeColor={themeColor} />
         </SkillIndicatorContainer>
       </Col>
     </SkillContainer>

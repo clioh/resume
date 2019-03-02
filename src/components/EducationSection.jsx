@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { Row, Col } from "react-styled-flexboxgrid";
-import { SectionTitle, SectionIcon } from "./Generics";
+import { SectionTitle } from "./Generics";
 
-import CollegeIcon from "../icons/college-graduation.svg";
+import ResumeContext from "../ResumeContext";
+
+import { ReactComponent as CollegeIcon } from "../icons/college-graduation.svg";
 
 const FieldOfStudy = styled.p`
   color: rgb(51, 51, 51);
@@ -15,7 +17,7 @@ const FieldOfStudy = styled.p`
 
 const UniversityName = styled.p`
   margin: 0;
-  color: rgb(30, 144, 255);
+  color: ${props => props.themeColor};
 `;
 
 const EduationContainer = styled(Col)`
@@ -34,27 +36,40 @@ const EducationSection = ({ education }) => {
     universityLocation
   } = education;
   return (
-    <EduationContainer xs={12}>
-      <Row>
-        <SectionIcon src={CollegeIcon} alt="College graduation" />
-        <SectionTitle>Education</SectionTitle>
-      </Row>
-      <Row>
-        <Col xs={6}>
-          <FieldOfStudy>{fieldOfStudy}</FieldOfStudy>
-        </Col>
-        <Col xs={6}>
-          <Dates>{dateEnded}</Dates>
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          <UniversityName>
-            {`${universityName}, ${universityLocation}`}
-          </UniversityName>
-        </Col>
-      </Row>
-    </EduationContainer>
+    <ResumeContext.Consumer>
+      {context => {
+        const { themeColor } = context;
+        return (
+          <EduationContainer xs={12}>
+            <Row>
+              <CollegeIcon
+                fill={themeColor}
+                width="2rem"
+                height="2rem"
+                alt="College graduation"
+              />
+
+              <SectionTitle themeColor={themeColor}>Education</SectionTitle>
+            </Row>
+            <Row>
+              <Col xs={6}>
+                <FieldOfStudy>{fieldOfStudy}</FieldOfStudy>
+              </Col>
+              <Col xs={6}>
+                <Dates>{dateEnded}</Dates>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                <UniversityName themeColor={themeColor}>
+                  {`${universityName}, ${universityLocation}`}
+                </UniversityName>
+              </Col>
+            </Row>
+          </EduationContainer>
+        );
+      }}
+    </ResumeContext.Consumer>
   );
 };
 
