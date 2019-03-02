@@ -30,9 +30,7 @@ const Hobby = ({ name, icon: iconName, link }) => {
   return (
     <HobbyContainer xs={6} md={4}>
       <a href={link} target="_blank" rel="noopener noreferrer">
-        <Row>
-          <HobbyImage alt="Hobby image" src={icon} />
-        </Row>
+        <Row>{iconName && <HobbyImage alt="Hobby image" src={icon} />}</Row>
         <Row center="xs">
           <HobbyName>{name}</HobbyName>
         </Row>
