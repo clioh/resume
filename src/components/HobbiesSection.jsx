@@ -24,7 +24,7 @@ const HobbiesSection = ({ hobbies, themeColor }) => {
           height="2rem"
           alt="Lanuage proficiency"
         />
-        <SectionTitle>Hobbies</SectionTitle>
+        <SectionTitle themeColor={themeColor}>Hobbies</SectionTitle>
       </Row>
       <HobbyList around="xs">
         {hobbies.map(hobby => {

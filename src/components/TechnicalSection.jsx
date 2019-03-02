@@ -24,7 +24,7 @@ const TechnicalSection = ({ technicalSkills, puppeteer, themeColor }) => {
           height="2rem"
           alt="Tehcnical skills"
         />
-        <SectionTitle>Technical Skills</SectionTitle>
+        <SectionTitle themeColor={themeColor}>Technical Skills</SectionTitle>
       </Row>
       <SkillSection>
         {technicalSkills.map(skill => {

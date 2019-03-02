@@ -39,7 +39,7 @@ const LanguagesSection = ({ languages, themeColor }) => {
           alt="Lanuage proficiency"
         />
 
-        <SectionTitle>Languages</SectionTitle>
+        <SectionTitle themeColor={themeColor}>Languages</SectionTitle>
       </Row>
       <Col xs={12}>
         <Row>
