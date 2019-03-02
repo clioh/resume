@@ -25,16 +25,18 @@ const IconList = {
   printer: Printer
 };
 
-const Hobby = ({ name, icon: iconName }) => {
+const Hobby = ({ name, icon: iconName, link }) => {
   const icon = IconList[iconName] ? IconList[iconName] : iconName;
   return (
     <HobbyContainer xs={6} md={4}>
-      <Row>
-        <HobbyImage alt="Hobby image" src={icon} />
-      </Row>
-      <Row center="xs">
-        <HobbyName>{name}</HobbyName>
-      </Row>
+      <a href={link} target="_blank" rel="noopener noreferrer">
+        <Row>
+          <HobbyImage alt="Hobby image" src={icon} />
+        </Row>
+        <Row center="xs">
+          <HobbyName>{name}</HobbyName>
+        </Row>
+      </a>
     </HobbyContainer>
   );
 };

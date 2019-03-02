@@ -27,7 +27,8 @@
   "hobbies": [
     {
       "name": "Hobby 1",
-      "icon": "https://www.cesarsway.com/sites/newcesarsway/files/styles/large_article_preview/public/How%20to%20calm%20a%20hyper%20dog.jpg?itok=Vg7ueySi"
+      "icon": "https://www.cesarsway.com/sites/newcesarsway/files/styles/large_article_preview/public/How%20to%20calm%20a%20hyper%20dog.jpg?itok=Vg7ueySi",
+      "link": "https://google.com"
     },
     { "name": "Hobby 2", "icon": "printer" }
   ],
