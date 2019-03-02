@@ -87,7 +87,17 @@
   ],
   "hobbies": [
     { "name": "Certified Flight Instructor", "icon": "airplane" },
-    { "name": "3D Printing", "icon": "printer" }
+    { "name": "3D Printing", "icon": "printer" },
+    {
+      "name": "skrt.io",
+      "icon": "https://static1.squarespace.com/static/5c5a09d2797f74564d484e05/t/5c5a63bbf9619a83169e095c/1550528156539/?format=original",
+      "link": "https://www.skrt.io"
+    },
+    {
+      "name": "Math Lads",
+      "icon": "https://yt3.ggpht.com/a-/AAuE7mCldELIIu_-cWQyX6wEOnCN52JhBZ1GLSn4Zg=s288-mo-c-c0xffffffff-rj-k-no",
+      "link": "https://www.youtube.com/channel/UC-1IcFTkoOh9vqHSVnDeo-Q"
+    }
   ],
   "technicalSkills": [
     { "name": "Python", "level": 0.9 },
