@@ -8,6 +8,8 @@ import { Typography } from "@material-ui/core";
 import "brace/mode/json";
 import "brace/theme/monokai";
 
+import ResumeForm from "../components/ResumeForm";
+
 import ResumeTemplate from "../resume-template";
 import ClioResumeJson from "../clio-resume.json";
 
@@ -85,7 +87,7 @@ class Index extends Component {
             following the template I've started you out with below.
           </Typography>
         </Row>
-
+        <ResumeForm />
         {this.state.error ? this.state.error : null}
         <form onSubmit={this.handleSubmit}>
           <Row center="xs">
