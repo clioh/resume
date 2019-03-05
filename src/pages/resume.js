@@ -6,6 +6,9 @@ import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import { saveAs } from "file-saver";
 import { ChromePicker } from "react-color";
+import Modal from "react-modal";
+import { Elements } from "react-stripe-elements";
+import ReactGA from "react-ga";
 
 import ResumeContext from "../ResumeContext";
 
@@ -16,6 +19,21 @@ import TechnicalSection from "../components/TechnicalSection";
 import HobbiesSection from "../components/HobbiesSection";
 import LanguagesSection from "../components/LanguagesSection";
 import Footer from "../components/Footer";
+import PaymentModal from "../components/PaymentModal";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    width: "300px",
+    maxWidth: "100vw",
+    padding: 0
+  }
+};
 
 const NameBorder = styled.div`
   border: 3px solid ${props => props.themeColor};
@@ -51,20 +69,25 @@ const Button = styled.button`
 class Resume extends Component {
   constructor(props) {
     super(props);
+
+    ReactGA.pageview("/resume");
+
     this.state = {
       puppeteer: false,
       generatingPDF: false,
-      pickerOpen: false
+      pickerOpen: false,
+      isModalOpen: false
     };
     this.generatePDF = this.generatePDF.bind(this);
   }
 
-  async generatePDF(resume, themeColor) {
+  async generatePDF(resume, themeColor, pdfOnly, stripeToken, email) {
     this.setState({ generatingPDF: true });
+    debugger;
     const response = await axios({
       method: "post",
-      url: "https://resumeserver.herokuapp.com/",
-      // url: "http://localhost:3000",
+      // url: "https://resumeserver.herokuapp.com/",
+      url: "http://localhost:3000/",
       data: {
         resume,
         themeColor,
@@ -73,8 +96,12 @@ class Resume extends Component {
         margin: {
           left: "0.5 in",
           right: "0.5 in"
-        }
+        },
+        pdfOnly,
+        stripeToken,
+        email
       },
+      json: true,
       responseType: "arraybuffer",
       headers: {
         Accept: "application/pdf"
@@ -86,18 +113,8 @@ class Resume extends Component {
   }
 
   render() {
-    const { generatingPDF, pickerOpen } = this.state;
+    const { generatingPDF, pickerOpen, isModalOpen, error } = this.state;
     const { handleColorChange } = this.props;
-
-    if (generatingPDF) {
-      return (
-        <Grid>
-          <Row middle="xs" center="xs">
-            Generating your PDF...
-          </Row>
-        </Grid>
-      );
-    }
 
     return (
       <ResumeContext.Consumer>
@@ -118,6 +135,37 @@ class Resume extends Component {
 
           return (
             <div className="App" style={{ position: "relative" }}>
+              <Modal
+                isOpen={isModalOpen}
+                onAfterOpen={this.afterOpenModal}
+                onRequestClose={() => {
+                  if (!generatingPDF) {
+                    this.setState({ isModalOpen: !isModalOpen });
+                  }
+                }}
+                style={customStyles}
+                contentLabel="Example Modal"
+              >
+                <Elements>
+                  <PaymentModal
+                    loading={generatingPDF}
+                    handleTokenReceived={(pdfOnly, token, email) =>
+                      this.generatePDF(
+                        resume,
+                        themeColor,
+                        pdfOnly,
+                        token,
+                        email
+                      )
+                    }
+                    setLoading={loading =>
+                      this.setState({ generatingPDF: loading })
+                    }
+                    setPaymentError={error => this.setState({ error })}
+                    error={error}
+                  />
+                </Elements>
+              </Modal>
               {!puppeteer && (
                 <Fragment>
                   <GithubCorner
@@ -125,7 +173,7 @@ class Resume extends Component {
                     bannerColor={themeColor}
                   />
                   <Button
-                    onClick={() => this.generatePDF(resume, themeColor)}
+                    onClick={() => this.setState({ isModalOpen: true })}
                     themeColor={themeColor}
                   >
                     Generate and download PDF version
