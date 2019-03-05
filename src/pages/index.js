@@ -3,6 +3,7 @@ import { Grid, Row } from "react-styled-flexboxgrid";
 import AceEditor from "react-ace";
 import GithubCorner from "react-github-corner";
 import styled from "styled-components";
+import ReactGA from "react-ga";
 
 import { Typography } from "@material-ui/core";
 import "brace/mode/json";
@@ -24,6 +25,7 @@ const Button = styled.button`
 class Index extends Component {
   constructor(props) {
     super(props);
+    ReactGA.pageview("/");
 
     this.state = {
       resumeJson: JSON.stringify(
