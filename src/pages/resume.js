@@ -178,7 +178,7 @@ class Resume extends Component {
                   >
                     Generate and download PDF version
                   </Button>
-                  <Link to="/">
+                  <Link to="/editor">
                     <Button themeColor={themeColor}>Back to the editor</Button>
                   </Link>
                   <Button
