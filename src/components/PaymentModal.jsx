@@ -1,7 +1,16 @@
 import React from "react";
 import styled from "styled-components";
 import { Grid, Row } from "react-styled-flexboxgrid";
-import { CircularProgress, Button } from "@material-ui/core";
+import {
+  CircularProgress,
+  Button,
+  Radio,
+  RadioGroup,
+  FormHelperText,
+  FormControlLabel,
+  FormControl,
+  FormLabel
+} from "@material-ui/core";
 
 import { injectStripe, CardElement } from "react-stripe-elements";
 
@@ -46,6 +55,27 @@ const PaymentModal = ({
 
   return (
     <Container fluid>
+      <FormControl component="fieldset">
+        <FormLabel component="legend">Packages</FormLabel>
+        <RadioGroup aria-label="Packages" name="packages">
+          <FormControlLabel
+            value="pdfOnly"
+            control={<Radio />}
+            label="PDF Download Only"
+          />
+          <FormControlLabel
+            value="pdfAndWebsite"
+            control={<Radio />}
+            label="PDF + Custom Domain"
+          />
+          <FormControlLabel
+            value="code"
+            control={<Radio />}
+            disabled
+            label="PDF + Custom Domain + Source Code (contact us)"
+          />
+        </RadioGroup>
+      </FormControl>
       {error && <strong style={{ color: "red" }}>{error}</strong>}
       {loading && (
         <LoadingContainer>

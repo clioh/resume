@@ -1,4 +1,9 @@
 .App {
-  font-family: "Roboto Mono", Helvetica, Arial, sans-serif;
+  font-family: "IBM Plex Mono", monospace;
+  /* Super important for printing the PDF's */
   -webkit-print-color-adjust: exact;
+}
+
+h3 {
+  font-family: "IBM Plex Mono", monospace;
 }
