@@ -10,6 +10,7 @@ import HeroImage from "../assets/resume_hero.jpg";
 
 import { Typography, Button } from "@material-ui/core";
 import Pricing from "../components/Pricing";
+import LandingFooter from "../components/LandingFooter";
 
 const Title = styled(Typography)`
   font-family: "IBM Plex Mono", monospace;
@@ -86,6 +87,7 @@ class Index extends Component {
           </Row>
         </Grid>
         <Pricing />
+        <LandingFooter />
       </div>
     );
   }
