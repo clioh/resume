@@ -65,13 +65,14 @@
       ]
     }
   ],
-  "education": {
-    "fieldOfStudy": "Bachelor of Science in Applied and Computational Mathematics",
-    "dateStarted": "08/2014",
-    "dateEnded": "Graduating 12/2019",
-    "universityName": "University of Southern California",
-    "universityLocation": "Los Angeles, USA"
-  },
+  "education": [
+    {
+      "fieldOfStudy": "Bachelor of Science in Applied and Computational Mathematics",
+      "dateEnded": "Graduating 12/2019",
+      "name": "University of Southern California",
+      "location": "Los Angeles, USA"
+    }
+  ],
   "general": {
     "github": "https://github.com/harpe116",
     "firstName": "Clio",

@@ -9,12 +9,14 @@
       "tasks": ["Example task/responsibility"]
     }
   ],
-  "education": {
-    "fieldOfStudy": "Field of study",
-    "dateEnded": "Graduation Date",
-    "universityName": "Your university",
-    "universityLocation": "Location"
-  },
+  "education": [
+    {
+      "fieldOfStudy": "Field of study",
+      "dateEnded": "Graduation Date",
+      "name": "Your university",
+      "location": "Location"
+    }
+  ],
   "general": {
     "github": "https://github.com/harpe116",
     "firstName": "First",
