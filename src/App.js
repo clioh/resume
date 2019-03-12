@@ -10,13 +10,14 @@ import { StripeProvider } from "react-stripe-elements";
 
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/index";
-import Resume from "./pages/resume";
+import Resume from "./pages/resume-preview";
 import Editor from "./pages/editor";
-import CustomResume from "./pages/customResume";
+import CustomResume from "./pages/custom-resume";
 
 import ResumeContext from "./ResumeContext";
 
 import "./App.css";
+require("dotenv").config();
 
 const theme = createMuiTheme({
   typography: {

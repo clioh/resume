@@ -66,7 +66,7 @@ const Button = styled.button`
   border-radius: 3px;
 `;
 
-class Resume extends Component {
+class ResumePreview extends Component {
   constructor(props) {
     super(props);
 
@@ -92,12 +92,17 @@ class Resume extends Component {
     const response = await axios({
       method: "post",
       // url: "https://resumeserver.herokuapp.com/",
-      url: "http://localhost:3000/",
+      url:
+        process.env.ENVIRONMENT === "DEVELOPMENT"
+          ? process.env.DEV_SERVER_ENDPOINT
+          : process.env.PROD_SERVER_ENDPOINT,
       data: {
         resume,
         themeColor,
-        websiteUrl: "https://hire.clioharper.xyz/",
-        // websiteUrl: "http://localhost:3001",
+        websiteUrl:
+          process.env.ENVIRONMENT === "DEVELOPMENT"
+            ? process.env.DEV_WEBSITE_URL
+            : process.env.PROD_WEBSITE_URL,
         margin: {
           left: "0.5 in",
           right: "0.5 in"
@@ -280,4 +285,4 @@ class Resume extends Component {
   }
 }
 
-export default Resume;
+export default ResumePreview;
