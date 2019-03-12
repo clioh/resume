@@ -29,45 +29,42 @@ const Dates = styled.p`
 `;
 
 const EducationSection = ({ education }) => {
-  const {
-    fieldOfStudy,
-    dateEnded,
-    universityName,
-    universityLocation
-  } = education;
   return (
     <ResumeContext.Consumer>
       {context => {
         const { themeColor } = context;
-        return (
-          <EduationContainer xs={12}>
-            <Row>
-              <CollegeIcon
-                fill={themeColor}
-                width="2rem"
-                height="2rem"
-                alt="College graduation"
-              />
+        return education.map(item => {
+          const { fieldOfStudy, dateEnded, name, location } = item;
+          return (
+            <EduationContainer xs={12}>
+              <Row>
+                <CollegeIcon
+                  fill={themeColor}
+                  width="2rem"
+                  height="2rem"
+                  alt="College graduation"
+                />
 
-              <SectionTitle themeColor={themeColor}>Education</SectionTitle>
-            </Row>
-            <Row>
-              <Col xs={6}>
-                <FieldOfStudy>{fieldOfStudy}</FieldOfStudy>
-              </Col>
-              <Col xs={6}>
-                <Dates>{dateEnded}</Dates>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12}>
-                <UniversityName themeColor={themeColor}>
-                  {`${universityName}, ${universityLocation}`}
-                </UniversityName>
-              </Col>
-            </Row>
-          </EduationContainer>
-        );
+                <SectionTitle themeColor={themeColor}>Education</SectionTitle>
+              </Row>
+              <Row>
+                <Col xs={6}>
+                  <FieldOfStudy>{fieldOfStudy}</FieldOfStudy>
+                </Col>
+                <Col xs={6}>
+                  <Dates>{dateEnded}</Dates>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  <UniversityName themeColor={themeColor}>
+                    {`${name}, ${location}`}
+                  </UniversityName>
+                </Col>
+              </Row>
+            </EduationContainer>
+          );
+        });
       }}
     </ResumeContext.Consumer>
   );
