@@ -241,7 +241,10 @@ class Resume extends Component {
                 <Row>
                   <Col xs={12} md={6}>
                     <Row>
-                      <EducationSection education={education} />
+                      <EducationSection
+                        education={education}
+                        themeColor={themeColor}
+                      />
                       <WorkHistorySection
                         workHistory={workHistory}
                         themeColor={themeColor}
