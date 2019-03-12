@@ -76,14 +76,19 @@ class Resume extends Component {
       puppeteer: false,
       generatingPDF: false,
       pickerOpen: false,
-      isModalOpen: false
+      isModalOpen: false,
+      slugValid: false,
+      slug: ""
     };
     this.generatePDF = this.generatePDF.bind(this);
+    this.setCancel = this.setCancel.bind(this);
+    this.cancel = null;
   }
 
   async generatePDF(resume, themeColor, pdfOnly, stripeToken, email) {
+    const { slug, purchaseOption } = this.state;
     this.setState({ generatingPDF: true });
-    debugger;
+
     const response = await axios({
       method: "post",
       // url: "https://resumeserver.herokuapp.com/",
@@ -97,9 +102,10 @@ class Resume extends Component {
           left: "0.5 in",
           right: "0.5 in"
         },
-        pdfOnly,
         stripeToken,
-        email
+        email,
+        slug,
+        purchaseOption
       },
       json: true,
       responseType: "arraybuffer",
@@ -112,8 +118,19 @@ class Resume extends Component {
     this.setState({ generatingPDF: false });
   }
 
+  setCancel(c) {
+    this.cancel = c;
+  }
+
   render() {
-    const { generatingPDF, pickerOpen, isModalOpen, error } = this.state;
+    const {
+      generatingPDF,
+      pickerOpen,
+      isModalOpen,
+      error,
+      slugValid,
+      slug
+    } = this.state;
     const { handleColorChange } = this.props;
 
     return (
@@ -148,7 +165,17 @@ class Resume extends Component {
               >
                 <Elements>
                   <PaymentModal
+                    setSlugValidity={(slug, slugValid) =>
+                      this.setState({ slugValid, slug })
+                    }
+                    slug={slug}
+                    slugValid={slugValid}
+                    setCancel={c => (this.cancel = c)}
+                    cancel={this.cancel}
                     loading={generatingPDF}
+                    handleRadioChanged={purchaseOption =>
+                      this.setState({ purchaseOption: purchaseOption })
+                    }
                     handleTokenReceived={(pdfOnly, token, email) =>
                       this.generatePDF(
                         resume,
