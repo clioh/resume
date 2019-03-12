@@ -1,120 +1,96 @@
 import React, { Component } from "react";
-import { Grid, Row } from "react-styled-flexboxgrid";
-import AceEditor from "react-ace";
-import GithubCorner from "react-github-corner";
+import { Grid, Row, Col } from "react-styled-flexboxgrid";
+import withNavigation from "../components/hocs/withNavigation";
+
 import styled from "styled-components";
+import ReactGA from "react-ga";
+import { Link } from "react-router-dom";
 
-import { Typography } from "@material-ui/core";
-import "brace/mode/json";
-import "brace/theme/monokai";
+import HeroImage from "../assets/resume_hero.jpg";
 
-import ResumeForm from "../components/ResumeForm";
+import { Typography, Button } from "@material-ui/core";
+import Pricing from "../components/Pricing";
+import LandingFooter from "../components/LandingFooter";
 
-import ResumeTemplate from "../resume-template";
-import ClioResumeJson from "../clio-resume.json";
+const Title = styled(Typography)`
+  font-family: "IBM Plex Mono", monospace;
+  max-width: 800px;
+`;
 
-const Button = styled.button`
-  background: #1e90ff;
-  color: #fff;
-  font-size: 1em;
-  margin: 1em;
-  padding: 0.25em 1em;
-  border: 2px solid #fff;
-  border-radius: 3px;
+const Hero = styled.img`
+  width: auto;
+  max-width: 100%;
+  height: calc(100vh - 100px);
+  object-fit: cover;
+`;
+
+const HeroCol = styled(Col)`
+  @media only screen and (max-width: 1000px) {
+    position: absolute;
+    z-index: 1;
+    left: 0;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2rem;
+  }
 `;
 
 class Index extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      resumeJson: JSON.stringify(
-        props.resume ? props.resume : ResumeTemplate,
-        null,
-        2
-      )
-    };
-
-    window.loadJson = async (resume, themeColor) => {
-      this.setState({ resume: resume });
-      this.props.updateResumeJson(resume, true, themeColor);
-      this.props.history.push("/resume");
-      this.forceUpdate();
-    };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.generateClioResume = this.generateClioResume.bind(this);
-  }
-
-  generateClioResume() {
-    this.props.updateResumeJson(ClioResumeJson);
-    this.props.history.push("/resume");
-  }
-
-  handleSubmit(evt) {
-    evt.preventDefault();
-    let json;
-    try {
-      json = JSON.parse(this.state.resumeJson);
-    } catch (e) {
-      this.setState({ error: e.message });
-      return;
-    }
-    this.props.updateResumeJson(json);
-    this.props.history.push("/resume");
+    ReactGA.pageview("/");
   }
 
   render() {
     return (
-      <Grid>
-        <GithubCorner
-          href="https://github.com/harpe116/resume"
-          bannerColor="rgb(30, 144, 255)"
-        />
-        <Row style={{ margin: "2rem" }} center="xs">
-          <Typography align="center" variant="h1">
-            Hi there!
-          </Typography>
-        </Row>
-        <Row center="xs">
-          <Typography variant="h3">I'm Clio</Typography>
-        </Row>
-        <Row center="xs" style={{ margin: "2rem" }}>
-          <Typography variant="h6">
-            I decided to host my resume on the web and it's turned into a tool
-            to help you create yours just as easily. You can click "See my
-            resume example" to take a look at my resume, or create your own
-            following the template I've started you out with below.
-          </Typography>
-        </Row>
-        <ResumeForm />
-        {this.state.error ? this.state.error : null}
-        <form onSubmit={this.handleSubmit}>
-          <Row center="xs">
-            <AceEditor
-              onChange={newValue => this.setState({ resumeJson: newValue })}
-              value={this.state.resumeJson}
-              mode="json"
-              theme="monokai"
-              type="text"
-              name="resumeJson"
-              editorProps={{ $blockScrolling: true }}
-            />
+      <div style={{ background: "#8295ff" }}>
+        <Grid fluid style={{ paddingLeft: 0, position: "relative" }}>
+          <Row middle="xs">
+            <HeroCol xs={12} md={7}>
+              <Hero src={HeroImage} />
+            </HeroCol>
+            <Col xs={12} md={5} style={{ zIndex: 2 }}>
+              <Row center="xs" middle="xs">
+                <Typography
+                  align="center"
+                  variant="h6"
+                  style={{ color: "white" }}
+                >
+                  ONLINE RESUME BUILDER
+                </Typography>
+
+                <Title align="center" variant="h3" style={{ color: "white" }}>
+                  Searching for a job is stressful.
+                </Title>
+                <Title
+                  align="center"
+                  variant="h3"
+                  style={{ marginTop: "1rem", color: "white" }}
+                >
+                  Creating a resume shouldn't be.
+                </Title>
+                <Row center="xs">
+                  <Button
+                    style={{
+                      marginTop: "2rem",
+                      color: "white",
+                      borderColor: "white"
+                    }}
+                    variant="outlined"
+                    color="primary"
+                  >
+                    Start creating
+                  </Button>
+                </Row>
+              </Row>
+            </Col>
           </Row>
-          <Row center="xs">
-            <Button type="submit" value="Submit">
-              Generate resume
-            </Button>
-          </Row>
-        </form>
-        <Row center="xs">
-          <Button onClick={this.generateClioResume}>
-            See my example resume
-          </Button>
-        </Row>
-      </Grid>
+        </Grid>
+        <Pricing />
+        <LandingFooter />
+      </div>
     );
   }
 }
 
-export default Index;
+export default withNavigation(Index);

@@ -6,6 +6,9 @@ import { Redirect, Link } from "react-router-dom";
 import axios from "axios";
 import { saveAs } from "file-saver";
 import { ChromePicker } from "react-color";
+import Modal from "react-modal";
+import { Elements } from "react-stripe-elements";
+import ReactGA from "react-ga";
 
 import ResumeContext from "../ResumeContext";
 
@@ -16,6 +19,21 @@ import TechnicalSection from "../components/TechnicalSection";
 import HobbiesSection from "../components/HobbiesSection";
 import LanguagesSection from "../components/LanguagesSection";
 import Footer from "../components/Footer";
+import PaymentModal from "../components/PaymentModal";
+
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    width: "300px",
+    maxWidth: "100vw",
+    padding: 0
+  }
+};
 
 const NameBorder = styled.div`
   border: 3px solid ${props => props.themeColor};
@@ -51,20 +69,30 @@ const Button = styled.button`
 class Resume extends Component {
   constructor(props) {
     super(props);
+
+    ReactGA.pageview("/resume");
+
     this.state = {
       puppeteer: false,
       generatingPDF: false,
-      pickerOpen: false
+      pickerOpen: false,
+      isModalOpen: false,
+      slugValid: false,
+      slug: ""
     };
     this.generatePDF = this.generatePDF.bind(this);
+    this.setCancel = this.setCancel.bind(this);
+    this.cancel = null;
   }
 
-  async generatePDF(resume, themeColor) {
+  async generatePDF(resume, themeColor, pdfOnly, stripeToken, email) {
+    const { slug, purchaseOption } = this.state;
     this.setState({ generatingPDF: true });
+
     const response = await axios({
       method: "post",
-      url: "https://resumeserver.herokuapp.com/",
-      // url: "http://localhost:3000",
+      // url: "https://resumeserver.herokuapp.com/",
+      url: "http://localhost:3000/",
       data: {
         resume,
         themeColor,
@@ -73,8 +101,13 @@ class Resume extends Component {
         margin: {
           left: "0.5 in",
           right: "0.5 in"
-        }
+        },
+        stripeToken,
+        email,
+        slug,
+        purchaseOption
       },
+      json: true,
       responseType: "arraybuffer",
       headers: {
         Accept: "application/pdf"
@@ -85,19 +118,20 @@ class Resume extends Component {
     this.setState({ generatingPDF: false });
   }
 
-  render() {
-    const { generatingPDF, pickerOpen } = this.state;
-    const { handleColorChange } = this.props;
+  setCancel(c) {
+    this.cancel = c;
+  }
 
-    if (generatingPDF) {
-      return (
-        <Grid>
-          <Row middle="xs" center="xs">
-            Generating your PDF...
-          </Row>
-        </Grid>
-      );
-    }
+  render() {
+    const {
+      generatingPDF,
+      pickerOpen,
+      isModalOpen,
+      error,
+      slugValid,
+      slug
+    } = this.state;
+    const { handleColorChange } = this.props;
 
     return (
       <ResumeContext.Consumer>
@@ -118,6 +152,47 @@ class Resume extends Component {
 
           return (
             <div className="App" style={{ position: "relative" }}>
+              <Modal
+                isOpen={isModalOpen}
+                onAfterOpen={this.afterOpenModal}
+                onRequestClose={() => {
+                  if (!generatingPDF) {
+                    this.setState({ isModalOpen: !isModalOpen });
+                  }
+                }}
+                style={customStyles}
+                contentLabel="Example Modal"
+              >
+                <Elements>
+                  <PaymentModal
+                    setSlugValidity={(slug, slugValid) =>
+                      this.setState({ slugValid, slug })
+                    }
+                    slug={slug}
+                    slugValid={slugValid}
+                    setCancel={c => (this.cancel = c)}
+                    cancel={this.cancel}
+                    loading={generatingPDF}
+                    handleRadioChanged={purchaseOption =>
+                      this.setState({ purchaseOption: purchaseOption })
+                    }
+                    handleTokenReceived={(pdfOnly, token, email) =>
+                      this.generatePDF(
+                        resume,
+                        themeColor,
+                        pdfOnly,
+                        token,
+                        email
+                      )
+                    }
+                    setLoading={loading =>
+                      this.setState({ generatingPDF: loading })
+                    }
+                    setPaymentError={error => this.setState({ error })}
+                    error={error}
+                  />
+                </Elements>
+              </Modal>
               {!puppeteer && (
                 <Fragment>
                   <GithubCorner
@@ -125,12 +200,12 @@ class Resume extends Component {
                     bannerColor={themeColor}
                   />
                   <Button
-                    onClick={() => this.generatePDF(resume, themeColor)}
+                    onClick={() => this.setState({ isModalOpen: true })}
                     themeColor={themeColor}
                   >
                     Generate and download PDF version
                   </Button>
-                  <Link to="/">
+                  <Link to="/editor">
                     <Button themeColor={themeColor}>Back to the editor</Button>
                   </Link>
                   <Button

@@ -1,19 +1,48 @@
 import React, { Component } from "react";
+import Modal from "react-modal";
+
+import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import { createMuiTheme } from "@material-ui/core/styles";
 
 import ReactGA from "react-ga";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { StripeProvider } from "react-stripe-elements";
 
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/index";
 import Resume from "./pages/resume";
+import Editor from "./pages/editor";
+import CustomResume from "./pages/customResume";
+
 import ResumeContext from "./ResumeContext";
 
 import "./App.css";
 
+const theme = createMuiTheme({
+  typography: {
+    // Use the system font instead of the default Roboto font.
+    h3: {
+      fontFamily: ["IBM Plex Mono", "monospace"].join(",")
+    },
+    h2: {
+      fontFamily: ["IBM Plex Mono", "monospace"].join(",")
+    },
+    h1: {
+      fontFamily: ["IBM Plex Mono", "monospace"].join(",")
+    },
+    button: {
+      fontFamily: ["IBM Plex Mono", "monospace"].join(","),
+      fontWeight: 700,
+      fontSize: "1.2rem"
+    }
+  }
+});
+
 function initializeReactGA() {
   ReactGA.initialize("UA-135192995-1");
-  ReactGA.pageview("/");
 }
+
+Modal.setAppElement("#root");
 
 class App extends Component {
   constructor(props) {
@@ -37,40 +66,51 @@ class App extends Component {
   render() {
     const { resume, themeColor } = this.state;
     return (
-      <ResumeContext.Provider value={this.state}>
-        <Router>
-          <ScrollToTop>
-            <div className="App">
-              <Route
-                exact
-                path="/"
-                render={routeProps => (
-                  <Index
-                    {...routeProps}
-                    updateResumeJson={this.updateResumeJson}
-                    resume={resume}
-                  />
-                )}
-              />
-              <Route
-                path="/resume"
-                render={routeProps => (
-                  <Resume
-                    {...routeProps}
-                    handleColorChange={newColor =>
-                      this.setState({
-                        themeColor: newColor.hex
-                      })
-                    }
-                    themeColor={themeColor}
-                    resume={resume}
-                  />
-                )}
-              />
-            </div>
-          </ScrollToTop>
-        </Router>
-      </ResumeContext.Provider>
+      <MuiThemeProvider theme={theme}>
+        <ResumeContext.Provider value={this.state}>
+          <StripeProvider apiKey="pk_test_Ue9wMhhFh1OI0Cs7kZ1qQQSG">
+            <Router>
+              <div className="App">
+                <ScrollToTop>
+                  <Switch>
+                    <Route
+                      exact
+                      path="/"
+                      render={routeProps => <Index {...routeProps} />}
+                    />
+                    <Route
+                      path="/editor"
+                      render={routeProps => (
+                        <Editor
+                          {...routeProps}
+                          updateResumeJson={this.updateResumeJson}
+                          resume={resume}
+                        />
+                      )}
+                    />
+                    <Route
+                      path="/resume"
+                      render={routeProps => (
+                        <Resume
+                          {...routeProps}
+                          handleColorChange={newColor =>
+                            this.setState({
+                              themeColor: newColor.hex
+                            })
+                          }
+                          themeColor={themeColor}
+                          resume={resume}
+                        />
+                      )}
+                    />
+                    <Route component={CustomResume} />
+                  </Switch>
+                </ScrollToTop>
+              </div>
+            </Router>
+          </StripeProvider>
+        </ResumeContext.Provider>
+      </MuiThemeProvider>
     );
   }
 }
