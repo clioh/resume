@@ -5,13 +5,15 @@ import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
 import { createMuiTheme } from "@material-ui/core/styles";
 
 import ReactGA from "react-ga";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { StripeProvider } from "react-stripe-elements";
 
 import ScrollToTop from "./components/ScrollToTop";
 import Index from "./pages/index";
 import Resume from "./pages/resume";
 import Editor from "./pages/editor";
+import CustomResume from "./pages/customResume";
+
 import ResumeContext from "./ResumeContext";
 
 import "./App.css";
@@ -68,41 +70,43 @@ class App extends Component {
         <ResumeContext.Provider value={this.state}>
           <StripeProvider apiKey="pk_test_Ue9wMhhFh1OI0Cs7kZ1qQQSG">
             <Router>
-              <ScrollToTop>
-                <div className="App">
-                  <Route
-                    exact
-                    path="/"
-                    render={routeProps => <Index {...routeProps} />}
-                  />
-                  <Route
-                    exact
-                    path="/editor"
-                    render={routeProps => (
-                      <Editor
-                        {...routeProps}
-                        updateResumeJson={this.updateResumeJson}
-                        resume={resume}
-                      />
-                    )}
-                  />
-                  <Route
-                    path="/resume"
-                    render={routeProps => (
-                      <Resume
-                        {...routeProps}
-                        handleColorChange={newColor =>
-                          this.setState({
-                            themeColor: newColor.hex
-                          })
-                        }
-                        themeColor={themeColor}
-                        resume={resume}
-                      />
-                    )}
-                  />
-                </div>
-              </ScrollToTop>
+              <div className="App">
+                <ScrollToTop>
+                  <Switch>
+                    <Route
+                      exact
+                      path="/"
+                      render={routeProps => <Index {...routeProps} />}
+                    />
+                    <Route
+                      path="/editor"
+                      render={routeProps => (
+                        <Editor
+                          {...routeProps}
+                          updateResumeJson={this.updateResumeJson}
+                          resume={resume}
+                        />
+                      )}
+                    />
+                    <Route
+                      path="/resume"
+                      render={routeProps => (
+                        <Resume
+                          {...routeProps}
+                          handleColorChange={newColor =>
+                            this.setState({
+                              themeColor: newColor.hex
+                            })
+                          }
+                          themeColor={themeColor}
+                          resume={resume}
+                        />
+                      )}
+                    />
+                    <Route component={CustomResume} />
+                  </Switch>
+                </ScrollToTop>
+              </div>
             </Router>
           </StripeProvider>
         </ResumeContext.Provider>
