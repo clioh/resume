@@ -32,9 +32,9 @@ const theme = createMuiTheme({
       fontFamily: ["IBM Plex Mono", "monospace"].join(",")
     },
     button: {
-      fontFamily: ["IBM Plex Mono", "monospace"].join(","),
-      fontWeight: 700,
-      fontSize: "1.2rem"
+      // fontFamily: ["IBM Plex Mono", "monospace"].join(","),
+      // fontWeight: 700,
+      // fontSize: "1.2rem"
     }
   }
 });

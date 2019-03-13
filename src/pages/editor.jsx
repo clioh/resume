@@ -9,6 +9,7 @@ import "brace/theme/monokai";
 import ResumeTemplate from "../resume-template";
 import ClioResumeJson from "../clio-resume.json";
 import withNavigation from "../components/hocs/withNavigation";
+import ResumeForm from "../components/ResumeForm";
 
 class Editor extends Component {
   constructor(props) {
@@ -19,7 +20,8 @@ class Editor extends Component {
         props.resume ? props.resume : ResumeTemplate,
         null,
         2
-      )
+      ),
+      editorMode: "form"
     };
 
     window.loadJson = async (resume, themeColor) => {
@@ -52,10 +54,13 @@ class Editor extends Component {
   }
 
   render() {
+    const { editorMode } = this.state;
     return (
       <Grid>
         {this.state.error ? this.state.error : null}
-        <form onSubmit={this.handleSubmit}>
+
+        {editorMode === "form" && <ResumeForm />}
+        {editorMode === "code" && (
           <Row center="xs">
             <AceEditor
               onChange={newValue => this.setState({ resumeJson: newValue })}
@@ -67,12 +72,17 @@ class Editor extends Component {
               editorProps={{ $blockScrolling: true }}
             />
           </Row>
-          <Row center="xs">
-            <Button type="submit" value="Submit">
-              Generate resume
-            </Button>
-          </Row>
-        </form>
+        )}
+        <Row center="xs">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={this.handleSubmit}
+          >
+            Generate resume
+          </Button>
+        </Row>
+
         <Row center="xs">
           <Button onClick={this.generateClioResume}>
             See my example resume
